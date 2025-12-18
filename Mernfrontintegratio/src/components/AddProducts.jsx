@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { API } from "../utils/api"; 
+import { API } from "../utils/api";
 
 export default function AddProducts() {
   const [name, setName] = useState("")
@@ -15,32 +15,34 @@ export default function AddProducts() {
 
   const validateForm = () => {
     const newErrors = {}
-    
+
     if (!name.trim()) newErrors.name = "Product name is required"
     if (!description.trim()) newErrors.description = "Description is required"
     if (!price || parseFloat(price) <= 0) newErrors.price = "Valid price is required"
     if (!image.trim()) newErrors.image = "Image URL is required"
     if (!stock || parseInt(stock) < 0) newErrors.stock = "Valid stock quantity is required"
-    
+
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    
+
     if (!validateForm()) {
       return
     }
 
     setLoading(true)
     setSuccess(false)
-    
+
     try {
+      const token = localStorage.getItem('token');
       const res = await fetch(`${API}/api/postProduct`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "x-auth-token": token
         },
         body: JSON.stringify({
           name,
@@ -52,7 +54,7 @@ export default function AddProducts() {
           brand: brand || undefined
         })
       })
-      
+
       if (res.ok) {
         setSuccess(true)
         // Reset form
@@ -64,7 +66,7 @@ export default function AddProducts() {
         setStock("")
         setBrand("")
         setErrors({})
-        
+
         // Auto hide success message after 5 seconds
         setTimeout(() => setSuccess(false), 5000)
       } else {
@@ -148,9 +150,8 @@ export default function AddProducts() {
                       type="text"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-gray-900 ${
-                        errors.name ? 'border-red-300' : 'border-gray-300'
-                      }`}
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-gray-900 ${errors.name ? 'border-red-300' : 'border-gray-300'
+                        }`}
                       placeholder="Enter product name"
                     />
                     {errors.name && (
@@ -172,9 +173,8 @@ export default function AddProducts() {
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
                       rows="4"
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-gray-900 ${
-                        errors.description ? 'border-red-300' : 'border-gray-300'
-                      }`}
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-gray-900 ${errors.description ? 'border-red-300' : 'border-gray-300'
+                        }`}
                       placeholder="Describe your product in detail"
                     />
                     {errors.description && (
@@ -198,9 +198,8 @@ export default function AddProducts() {
                           onChange={(e) => setPrice(e.target.value)}
                           min="0"
                           step="0.01"
-                          className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-gray-900 ${
-                            errors.price ? 'border-red-300' : 'border-gray-300'
-                          }`}
+                          className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-gray-900 ${errors.price ? 'border-red-300' : 'border-gray-300'
+                            }`}
                           placeholder="0.00"
                         />
                       </div>
@@ -218,9 +217,8 @@ export default function AddProducts() {
                         value={stock}
                         onChange={(e) => setStock(e.target.value)}
                         min="0"
-                        className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-gray-900 ${
-                          errors.stock ? 'border-red-300' : 'border-gray-300'
-                        }`}
+                        className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-gray-900 ${errors.stock ? 'border-red-300' : 'border-gray-300'
+                          }`}
                         placeholder="Enter quantity"
                       />
                       {errors.stock && (
@@ -271,9 +269,8 @@ export default function AddProducts() {
                       type="text"
                       value={image}
                       onChange={(e) => setImage(e.target.value)}
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-gray-900 ${
-                        errors.image ? 'border-red-300' : 'border-gray-300'
-                      }`}
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-gray-900 ${errors.image ? 'border-red-300' : 'border-gray-300'
+                        }`}
                       placeholder="https://example.com/image.jpg"
                     />
                     {errors.image && (
@@ -283,9 +280,9 @@ export default function AddProducts() {
                       <div className="mt-3">
                         <p className="text-sm text-gray-900 mb-2">Image Preview:</p>
                         <div className="w-32 h-32 border border-gray-300 rounded-lg overflow-hidden">
-                          <img 
-                            src={image} 
-                            alt="Preview" 
+                          <img
+                            src={image}
+                            alt="Preview"
                             className="w-full h-full object-cover"
                             onError={(e) => {
                               e.target.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="%23e5e7eb"><rect width="100" height="100"/><text x="50%" y="50%" font-family="Arial" font-size="12" fill="%239ca3af" text-anchor="middle" dy=".3em">Invalid URL</text></svg>'
@@ -315,7 +312,7 @@ export default function AddProducts() {
                         "Add Product"
                       )}
                     </button>
-                    
+
                     <button
                       type="button"
                       onClick={resetForm}
@@ -338,7 +335,7 @@ export default function AddProducts() {
                 </svg>
                 Product Guidelines
               </h3>
-              
+
               <ul className="space-y-4">
                 <li className="flex items-start">
                   <div className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center mt-0.5">
@@ -389,9 +386,9 @@ export default function AddProducts() {
                   {name || image ? (
                     <div>
                       {image && (
-                        <img 
-                          src={image} 
-                          alt="Preview" 
+                        <img
+                          src={image}
+                          alt="Preview"
                           className="w-full h-40 object-cover rounded-md mb-3"
                         />
                       )}

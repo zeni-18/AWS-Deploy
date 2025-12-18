@@ -7,6 +7,8 @@ import BuyNow from "./components/BuyNow";
 import Login from "./components/Login";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import AddProducts from "./components/AddProducts";
+import Signup from "./components/Signup";
+import CategoryPage from "./pages/CategoryPage";
 
 function App() {
   const [cart, setCart] = useState([]);
@@ -88,33 +90,37 @@ function App() {
               >
                 Products
               </Link>
-              <Link
-                to="/addproduct"
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${location.pathname === "/addproduct"
-                  ? "text-indigo-600 bg-indigo-50"
-                  : "text-slate-600 hover:text-indigo-600 hover:bg-slate-50"
-                  }`}
-              >
-                Add Product
-              </Link>
+              {user && user.role === 'seller' && (
+                <Link
+                  to="/addproduct"
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${location.pathname === "/addproduct"
+                    ? "text-indigo-600 bg-indigo-50"
+                    : "text-slate-600 hover:text-indigo-600 hover:bg-slate-50"
+                    }`}
+                >
+                  Add Product
+                </Link>
+              )}
             </nav>
 
             {/* Right Side Actions */}
             <div className="flex items-center space-x-2">
-              {/* Cart */}
-              <Link
-                to="/cart"
-                className="relative p-2 text-slate-500 hover:text-indigo-600 transition-colors rounded-full hover:bg-slate-100"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                </svg>
-                {totalCartItems > 0 && (
-                  <span className="absolute -top-0.5 -right-0.5 bg-amber-500 text-white text-[10px] font-bold rounded-full h-5 w-5 flex items-center justify-center shadow-sm">
-                    {totalCartItems}
-                  </span>
-                )}
-              </Link>
+              {/* Cart - Only for Buyers or Guests */}
+              {(!user || user.role !== 'seller') && (
+                <Link
+                  to="/cart"
+                  className="relative p-2 text-slate-500 hover:text-indigo-600 transition-colors rounded-full hover:bg-slate-100"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                  </svg>
+                  {totalCartItems > 0 && (
+                    <span className="absolute -top-0.5 -right-0.5 bg-amber-500 text-white text-[10px] font-bold rounded-full h-5 w-5 flex items-center justify-center shadow-sm">
+                      {totalCartItems}
+                    </span>
+                  )}
+                </Link>
+              )}
 
               {/* User Actions */}
               <div className="relative ml-4">
@@ -247,6 +253,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Products cart={cart} setCart={setCart} user={user} />} />
           <Route path="/products" element={<Products cart={cart} setCart={setCart} user={user} />} />
+          <Route path="/category/:category" element={<CategoryPage cart={cart} setCart={setCart} user={user} />} />
           <Route path="/product/:id" element={<Product user={user} cart={cart} setCart={setCart} />} />
           <Route path="/cart" element={
             <ProtectedRoute>
@@ -264,6 +271,7 @@ function App() {
             </ProtectedRoute>
           } />
           <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
         </Routes>
       </main>
 

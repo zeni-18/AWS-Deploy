@@ -1,0 +1,22 @@
+export const fallbackProducts = [
+    { _id: "1", name: "Wireless Headphones", description: "Premium noise cancelling headphones.", price: 19999, category: "electronics", image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80" },
+    { _id: "2", name: "Smart Watch Series 5", description: "Track your fitness and stay connected.", price: 24999, category: "electronics", image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80" },
+    { _id: "3", name: "4K Action Camera", description: "Capture your adventures in stunning 4K.", price: 15499, category: "electronics", image: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=800&q=80" },
+    { _id: "4", name: "Gaming Mouse", description: "High precision RGB gaming mouse.", price: 2999, category: "electronics", image: "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?auto=format&fit=crop&w=800&q=80" },
+    { _id: "5", name: "Bluetooth Speaker", description: "Portable speaker with deep bass.", price: 4999, category: "electronics", image: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&fit=crop&w=800&q=80" },
+    { _id: "6", name: "Classic Denim Jeans", description: "Timeless style for everyday wear.", price: 3499, category: "fashion", image: "https://images.unsplash.com/photo-1542272454315-4c01d7abdf4a?auto=format&fit=crop&w=800&q=80" },
+    { _id: "7", name: "Running Shoes", description: "Lightweight and comfortable for long runs.", price: 5999, category: "fashion", image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=80" },
+    { _id: "8", name: "Leather Satchel", description: "Handcrafted genuine leather bag.", price: 8999, category: "fashion", image: "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=800&q=80" },
+    { _id: "9", name: "Designer Sunglasses", description: "UV protection with stylish frames.", price: 4500, category: "fashion", image: "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=800&q=80" },
+    { _id: "10", name: "Summer Hat", description: "Perfect protection for beach days.", price: 1299, category: "fashion", image: "https://images.unsplash.com/photo-1521369909029-2afed882baee?auto=format&fit=crop&w=800&q=80" },
+    { _id: "11", name: "Ceramic Vase", description: "Minimalist design for modern homes.", price: 1499, category: "home & living", image: "/assets/images/ceramic_vase.jpg" },
+    { _id: "12", name: "Soft Throw Blanket", description: "Cozy knit blanket for your sofa.", price: 2499, category: "home & living", image: "/assets/images/soft_blanket.jpg" },
+    { _id: "13", name: "Scented Candle", description: "Lavender and Vanilla aromatherapy candle.", price: 899, category: "home & living", image: "/assets/images/scented_candle.jpg" },
+    { _id: "14", name: "Plant Stand", description: "Wooden stand for indoor plants.", price: 1899, category: "home & living", image: "/assets/images/plant_stand.jpg" },
+    { _id: "15", name: "Table Lamp", description: "Modern lighting for your study.", price: 3299, category: "home & living", image: "/assets/images/table_lamp.jpg" },
+    { _id: "16", name: "Yoga Mat", description: "Non-slip eco-friendly yoga mat.", price: 1599, category: "sports", image: "https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?auto=format&fit=crop&w=800&q=80" },
+    { _id: "17", name: "Training Dumbbells", description: "Set of 5kg adjustable weights.", price: 4999, category: "sports", image: "https://images.unsplash.com/photo-1638536532686-d610adfc8e5c?auto=format&fit=crop&w=800&q=80" },
+    { _id: "18", name: "Basketball", description: "Professional indoor/outdoor ball.", price: 1999, category: "sports", image: "/assets/images/basketball.jpg" },
+    { _id: "19", name: "Tennis Racket", description: "Lightweight graphite racket.", price: 7999, category: "sports", image: "/assets/images/tennis_racket.jpg" },
+    { _id: "20", name: "Running Bottle", description: "Insulated water bottle for athletes.", price: 999, category: "sports", image: "/assets/images/running_bottle.jpg" }
+];

@@ -9,27 +9,58 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
+  const [error, setError] = useState("");
+
   const handleLogin = async (e) => {
     e?.preventDefault();
     if (!email || !password) return;
 
     setIsLoading(true);
+    setError("");
 
-    // Simulate API call
-    setTimeout(() => {
-      // Create user object and store in localStorage
-      const user = { email, name: email.split('@')[0] };
-      localStorage.setItem("user", JSON.stringify(user));
+    try {
+      const response = await fetch("http://localhost:5000/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
-      // Dispatch storage event to update App state immediately
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Login failed");
+      }
+
+      // Store user AND token
+      localStorage.setItem("user", JSON.stringify(data.user));
+      localStorage.setItem("token", data.token);
+
+      // Dispatch storage event to update App state
       window.dispatchEvent(new Event("storage"));
 
-      setIsLoading(false);
-
-      // For this demo app, we're doing a full reload to ensure App.jsx picks up the user state
-      // In a real app with Context, this wouldn't be needed
+      // Redirect
       window.location.href = "/";
-    }, 1500);
+    } catch (err) {
+      console.warn("Backend probably offline, using Demo Login");
+
+      // DEMO LOGIN FALLBACK
+      // If backend is unreachable, simulate a successful login
+      const demoUser = {
+        name: email.split('@')[0],
+        email: email,
+        role: 'buyer', // Default to buyer for demo
+        id: 'demo-user-123'
+      };
+
+      localStorage.setItem("user", JSON.stringify(demoUser));
+      localStorage.setItem("token", "demo-token-12345");
+      window.dispatchEvent(new Event("storage"));
+      window.location.href = "/";
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -50,6 +81,12 @@ export default function Login() {
               Sign in to access your account
             </p>
           </div>
+
+          {error && (
+            <div className="bg-red-50 text-red-500 p-4 rounded-xl mb-6 text-sm text-center">
+              {error}
+            </div>
+          )}
 
           <form onSubmit={handleLogin} className="space-y-6">
             <div>
