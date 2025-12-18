@@ -15,7 +15,7 @@ export default function CategoryPage({ setCart, cart, user }) {
 
     useEffect(() => {
         setLoading(true);
-        let url = `${API}/api/getproduct?category=${category}`;
+        let url = `${API}/api/getproduct?category=${encodeURIComponent(category)}`;
 
         fetch(url)
             .then(res => {
